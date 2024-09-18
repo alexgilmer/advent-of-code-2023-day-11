@@ -27,8 +27,9 @@
             Dictionary<KeyValuePair<int, int>, int> rowCalculations = [];
             Dictionary<KeyValuePair<int, int>, int> colCalculations = [];
 
-            int result = 0;
+            long result = 0;
             int connections = 0;
+            Func<bool, int> distanceCalc = t => t ? 1 : 1000000;
 
             for (int i = 0; i < galaxies.Count - 1; i++)
             {
@@ -43,7 +44,7 @@
                     }
                     else
                     {
-                        rowCalculations[rowRange] = rowsWithStars[rowRange.Key..rowRange.Value].Sum(t => t ? 1 : 2);
+                        rowCalculations[rowRange] = rowsWithStars[rowRange.Key..rowRange.Value].Sum(distanceCalc);
                         result += rowCalculations[rowRange];
                     }
 
@@ -53,13 +54,13 @@
                     }
                     else
                     {
-                        colCalculations[colRange] = colsWithStars[colRange.Key..colRange.Value].Sum(t => t ? 1 : 2);
+                        colCalculations[colRange] = colsWithStars[colRange.Key..colRange.Value].Sum(distanceCalc);
                         result += colCalculations[colRange];
                     }
                 }
             }
 
-            Console.WriteLine($"Distance sum: {result}.  Connections: {connections}");
+            Console.WriteLine($"Distance sum: {result}. ");
         }
 
         static IList<string> GetPuzzleInput()
